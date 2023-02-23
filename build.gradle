@@ -1,43 +1,36 @@
-buildscript {
-    ext{
-        springBootVersion= '2.1.7.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.7'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-
-apply plugin:'java'
-apply plugin:'eclipse'
-apply plugin:'org.springframework.boot'
-apply plugin:'io.spring.dependency-management'
-
-group 'org.example'
-version '1.0-SNAPSHOT'
-sourceCompatibility=1.8
+group = 'com.movie'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
 
+
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation('org.springframework.boot:spring-boot-starter-test')
-    implementation('org.projectlombok:lombok')
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('com.h2database:h2')
-    implementation 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor('org.projectlombok:lombok')
-    testAnnotationProcessor('org.projectlombok:lombok')
-    implementation('org.springframework.boot:spring-boot-starter-mustache')
-    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation  'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
